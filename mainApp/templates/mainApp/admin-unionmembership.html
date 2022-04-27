@@ -1,0 +1,52 @@
+<!Doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="Style2.css">
+</head>
+
+<body>
+
+  <div class="topnav">
+    <a class="active" href="admin-home.html">Home</a>
+    <div class="topnav-right">
+      <a href="#Profile">Profile</a>
+      <a href="#Logout">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <img src="Airport.jpg" width=100% height="300" alt="Snow">
+    <h1 class="centered">ADD MEMBERSHIP INFO</h1>
+    <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
+  </div>
+  
+  <form class="container" onSubmit = "write" action="write.html" method="POST">
+
+    <div>
+        <label>UNION NUMBER</label>
+        <select name="unionnumber" id="unionnumber">
+          <option value="write">123</option>.   <!--UPDATE TO POPULATE DATA I DROPDOWN -->
+          <option value="write">456</option>
+        </select>
+    </div>
+    <div>
+      <label>MEMBERSHIP</label>
+      <input type="text" name="MEMBERSHIP" id="membership" placeholder="Enter Membership Number">
+    </div>
+    <div>
+      <label>SSN</label>
+      <input type="text" name="SSN" id="ssn" placeholder="Enter SSN">
+    </div>
+   
+   
+    <div>
+      <button>Submit</button>
+    </div>
+  </form>
+
+
+
+</body>
+
+</html>

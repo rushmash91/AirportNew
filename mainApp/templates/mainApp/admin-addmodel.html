@@ -1,0 +1,52 @@
+<!Doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="Style2.css">
+</head>
+
+<body>
+
+  <div class="topnav">
+    <a class="active" href="admin-home.html">Home</a>
+    <div class="topnav-right">
+      <a href="#Profile">Profile</a>
+      <a href="#Logout">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <img src="Airport.jpg" width=100% height="300" alt="Snow">
+    <h1 class="centered">ADD MODEL</h1>
+    <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
+  </div>
+  
+  <form class="container" onSubmit = "write2" action="write.html" method="POST">
+
+    <div>
+      <label>MODEL NUMBER</label>
+      <input type="text" name="MODELNUMBER" id="modelnumber" placeholder="Enter Model Number">
+    </div>
+    <div>
+      <label>NAME</label>
+      <input type="text" name="MNAME" id="mname" placeholder="Enter Name">
+    </div>
+    <div>
+      <label>CAPACITY</label>
+      <input type="text" name="CAPACITY" id="capacity" placeholder="Enter Capacity">
+    </div>
+    <div>
+      <label>WEIGHT</label>
+      <input type="text" name="WEIGHT" id="weight" placeholder="Enter Weight">
+    </div>
+   
+    <div>
+      <button>Submit Model</button>
+    </div>
+  </form>
+
+
+
+</body>
+
+</html>

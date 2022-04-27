@@ -1,0 +1,62 @@
+
+
+
+<!Doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="Style2.css">
+</head>
+
+<body>
+
+  <div class="topnav">
+    <a class="active" href="admin-home.html">Home</a>
+    <div class="topnav-right">
+      <a href="#Profile">Profile</a>
+      <a href="#Logout">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <img src="Airport.jpg" width=100% height="300" alt="Snow">
+    <h1 class="centered">ADD TEST RECORD</h1>
+    <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
+  </div>
+  
+  <form class="container" onSubmit = "write" action="write.html" method="POST">
+    <div>
+        <label>REG NUMBER</label>
+        <select name="Registration" id="registrationnumber">
+        <option value="regnum">12345</option>
+        <option value="regnum">12345</option>
+        <option value="regnum">12345</option>   <!--UPDATE TO POPULATE DATA IN DROPDOWN -->
+        </select>
+    </div>
+    <div>
+        <label>FFANUMBER</label>
+        <select name="ffanum" id="ffanumber">
+        <option value="ffanum">56789</option>  <!--UPDATE TO POPULATE DATA IN DROPDOWN -->
+        </select>
+    </div>
+    <div>
+      <label>SCORE</label>
+      <input type="text" name="SCORE" id="score" placeholder="Enter Score">
+    </div>
+    <div>
+      <label>HOURS</label>
+      <input type="text" name="HOURS" id="hours" placeholder="Enter Hours">
+    </div>
+   
+   
+    <div>
+      <button>Submit Union</button>
+    </div>
+  </form>
+
+
+
+</body>
+
+</html>
+

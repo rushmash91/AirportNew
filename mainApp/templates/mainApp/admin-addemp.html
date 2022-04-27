@@ -1,0 +1,79 @@
+{% load static %}
+<!Doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
+</head>
+
+<body>
+
+  <div class="topnav">
+    <a class="active" href="/Airport">Home</a>
+    <div class="topnav-right">
+      <a href="#Profile">Profile</a>
+      <a href="#Logout">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <img src="Airport.jpg" width=100% height="300" alt="Snow">
+    <h1 class="centered">ADD EMPLOYEE</h1>
+    <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
+  </div>
+ 
+  <form class="container" onSubmit = "write"  method="POST">{% csrf_token %}
+    <div>
+      <label>NAME</label>
+      <input type="text" name="NAME" id="name" placeholder="Enter Employee Name">
+    </div>
+    <div>
+      <label>SSN</label>
+      <input type="text" name="SSN" id="ssn" placeholder="Enter SSN">
+    </div>
+    <div>
+      <label>SEX</label>
+      <input type="text" name="SEX" id="sex" placeholder="Enter Sex">
+    </div>
+    <div>
+      <label>PHONE NUMBER</label>
+      <input type="text" name="PHONENUMBER" id="phonenumber" placeholder="Enter Phone Number">
+    </div>
+    <div>
+      <label>SALARY</label>
+      <input type="text" name="SALARY" id="salary" placeholder="Enter Salary">
+    </div>
+    <div>
+      <label>STREET</label>
+      <input type="text" name="STREET" id="street" placeholder="Enter Street">
+    </div>
+    <div>
+      <label>CITY</label>
+      <input type="text" name="CITY" id="city" placeholder="Enter City">
+    </div>
+    <div>
+      <label>COUNTRY</label>
+      <input type="text" name="COUNTRY" id="country" placeholder="Enter Country">
+    </div>
+    <div>
+      <label>EMPLOYEE TYPE</label>
+      <input type="text" name="EMPLOYEETYPE" id="employeetype" placeholder="Enter Type of Employee">
+    </div>
+    <div>
+      <label>USERNAME</label>
+      <input type="text" name="USERNAME" id="username" placeholder="Enter Username">
+    </div>
+    <div>
+      <label>PASSWORD</label>
+      <input type="text" name="PASSWORD" id="Password" placeholder="Enter Password">
+    </div>
+    <div>
+      <button>Submit Test</button>
+    </div>
+  </form>
+
+
+
+</body>
+
+</html>
