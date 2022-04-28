@@ -33,18 +33,10 @@ body {
   float: right;
 }
 
-
-
 /*HEADER */
 
 .h1 {
   font-size: 40px;
-}
-
-.h2 {
-  font-size: 50px;
-  color: pink;
-  text-align: center;
 }
 
 .container {
@@ -59,6 +51,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+/*BUTTONS */
 
 /*BUTTONS */
 
@@ -79,11 +73,6 @@ body {
 .button1 {background-color: #ADD8E6;}
 
 
-
-
-
-
-
 .bottom-right {
   position: absolute;
   bottom: 8px;
@@ -96,12 +85,12 @@ body {
 }
 
 .btn-group button {
-  background-color: #ADD8E6;
+  background-color: #add8e6;
   color: black;
   padding: 80px;
   cursor: pointer;
   float: left;
-  height: 200%;
+  height: 400%;
 }
 
 .btn-group:after {
@@ -111,7 +100,7 @@ body {
 }
 
 .B1 {
- margin-right: 100px;
+  margin-right: 100px;
 }
 
 .center-h {
@@ -125,9 +114,41 @@ body {
 }
 
 .h-500 {
-  height: 300;
+  height: 500;
 }
 
 .btn-group button:hover {
-  background-color: #D3D3D3;
+  background-color: #d3d3d3;
+}
+
+form.container {
+  color: black;
+}
+
+form label {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: right;
+  width: 10em;
+  margin: 0 1em 0 0;
+}
+
+form input {
+  display: inline-block;
+  vertical-align: middle;
+  height: 2em;
+  text-align: center;
+  width: 20em;
+}
+
+form div {
+  line-height: 4em;
+}
+
+form div button {
+  height: 3em;
+  width: 7.3em;
+  background: #0e8c80;
+  color: white;
+  cursor: pointer;
 }
