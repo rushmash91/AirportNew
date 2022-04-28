@@ -1,9 +1,7 @@
-from select import select
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.db import connection
 
-# Create your views here.
 
 def querydict_to_dict(query_dict):
     data = {}
@@ -14,8 +12,11 @@ def querydict_to_dict(query_dict):
         data[key] = v
     return data
 
+
 def index(request):
     return render(request, 'mainApp/admin-home.html')
+
+
 def AddEmployee(request):
     if request.method == "POST":
         data = querydict_to_dict(request.POST)
@@ -26,6 +27,8 @@ def AddEmployee(request):
             print(row)
         #print(data.NAME)  
     return render(request, 'mainApp/admin-addemp.html')
+
+
 def AddEmp(request):
     data=request.POST
     print(data)
@@ -35,6 +38,7 @@ def AddEmp(request):
         print(row)
     
     return render(request, 'mainApp/admin-home.html')
+
 
 def viewEmp(request):
     with connection.cursor() as cursor:
@@ -48,6 +52,7 @@ def viewEmp(request):
         print(results)
         #print(row)
     return render(request, 'mainApp/admin-viewemp.html', {'results': results})
+
 
 def updateEmp(request,ssn):
     if request.method == "POST":
