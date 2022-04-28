@@ -1,3 +1,4 @@
+{% load static %}
 <!Doctype html>
 <html>
 
@@ -8,7 +9,7 @@
 <body>
 
   <div class="topnav">
-    <a class="active" href="admin-home.html">Home</a>
+    <a class="active" href="{% static 'mainApp/styles/Style.css' %}">Home</a>
     <div class="topnav-right">
       <a href="#Profile">Profile</a>
       <a href="#Logout">Logout</a>
