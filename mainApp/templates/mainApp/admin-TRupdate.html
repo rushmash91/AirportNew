@@ -23,6 +23,37 @@
   </div>
 
 
+  <form class="container" onSubmit = "write"  method="POST">{% csrf_token %}
+    {% for result in results %}
+    <div>
+      <label>TIMESTAMP</label>
+      <input type="text" name="TIMESTAMP" id="timestmp" placeholder="Enter Timestamp" value="{{ result.timestmp }}">
+    </div>
+    <div>
+      <label>SSN</label>
+      <input type="text" name="SSN" id="ssn" placeholder="Enter SSN" value="{{ result.ssn }}" readonly>
+    </div>
+    <div>
+      <label>REGNUM</label>
+      <input type="text" name="REGNUM" id="regnum" placeholder="Enter Reg. no." value="{{ result.regnum }}">
+    </div>
+    <div>
+      <label>FFA NUM</label>
+      <input type="text" name="FFANUM" id="ffa_num" placeholder="Enter FFA no." value="{{ result.ffa_num }}">
+    </div>
+    <div>
+      <label>SCORE</label>
+      <input type="text" name="SCORE" id="score" placeholder="Enter Score" value="{{ result.score }}">
+    </div>
+    <div>
+      <label>HOUR</label>
+      <input type="text" name="HOUR" id="hour" placeholder="Enter hour" value="{{ result.hour }}">
+    </div>
+    {% endfor %}
+    <div>
+      <button>Submit</button>
+    </div>
+  </form>
 
 
 </body>

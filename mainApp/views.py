@@ -95,11 +95,12 @@ def updateTR(request, ssn, regnum, ffa_num):
 
     if request.method == "POST":
         data = querydict_to_dict(request.POST)
+        print(data)
         with connection.cursor() as cursor:
             sqlQuery = 'UPDATE test_records set timestmp = "{}", score = {}, hour = "{}" where ssn = {} AND' \
                        ' regnum = {} AND ffa_num = {}'
-            sqlQuery = sqlQuery.format(data['TIMESTMP'], data['SCORE'], data['HOUR'], data['SSN'], data['REGNUM'],
-                                       data['FFA_NUM']
+            sqlQuery = sqlQuery.format(data['TIMESTAMP'], data['SCORE'], data['HOUR'], data['SSN'], data['REGNUM'],
+                                       data['FFANUM']
     )
             cursor.execute(sqlQuery)
         url = '/Airport/viewTR'
@@ -107,7 +108,7 @@ def updateTR(request, ssn, regnum, ffa_num):
              window.location="%s"</script>' % url
         return HttpResponse(resp_body)
     with connection.cursor() as cursor:
-        cursor.execute('SELECT * FROM employee where ssn=%s AND regnum=%s AND ffa_num=%s', ssn, regnum, ffa_num)
+        cursor.execute('SELECT * FROM test_records where ssn=%s AND regnum=%s AND ffa_num=%s', (ssn, regnum, ffa_num))
         columns = [col[0] for col in cursor.description]
         results=[
         dict(zip(columns, row))
