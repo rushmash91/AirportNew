@@ -71,11 +71,47 @@ def updateEmp(request,ssn):
         cursor.execute('SELECT * FROM employee where ssn= %s',ssn)
         #row = cursor.fetchall()
         columns = [col[0] for col in cursor.description]
+        results = [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        print(results)
+    return render(request, 'mainApp/admin-updateemp.html', {'results': results})
+
+
+def viewTR(request):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM test_records')
+        columns = [col[0] for col in cursor.description]
+        results = [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        print(results)
+    return render(request, 'mainApp/admin-TRview.html', {'results': results})
+
+
+def updateTR(request, ssn, regnum, ffa_num):
+
+    if request.method == "POST":
+        data = querydict_to_dict(request.POST)
+        with connection.cursor() as cursor:
+            sqlQuery = 'UPDATE test_records set timestmp = "{}", score = {}, hour = "{}" where ssn = {} AND' \
+                       ' regnum = {} AND ffa_num = {}'
+            sqlQuery = sqlQuery.format(data['TIMESTMP'], data['SCORE'], data['HOUR'], data['SSN'], data['REGNUM'],
+                                       data['FFA_NUM']
+    )
+            cursor.execute(sqlQuery)
+        url = '/Airport/viewTR'
+        resp_body = '<script>alert("The record was updated");\
+             window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM employee where ssn=%s AND regnum=%s AND ffa_num=%s', ssn, regnum, ffa_num)
+        columns = [col[0] for col in cursor.description]
         results=[
         dict(zip(columns, row))
         for row in cursor.fetchall()
         ]
         print(results)
-        #print(row)
-    return render(request, 'mainApp/admin-updateemp.html', {'results': results})
-
+    return render(request, 'mainApp/admin-TRupdate.html', {'results': results})

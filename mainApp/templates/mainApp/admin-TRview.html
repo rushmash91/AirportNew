@@ -22,7 +22,18 @@
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
 
-
+<table border="solid">
+  {% for result in results %}
+    <tr>
+    <td>{{ result.ssn }}</td>
+    <td>{{ result.timestmp }}</td>
+    <td>{{ result.regnum }}</td>
+    <td>{{ result.ffa_num }}</td>
+    <td>{{ result.score }}</td>
+    <td>{{ result.hour }}</td>
+    </tr>
+	  {% endfor %}
+  </table>
 
 
 </body>
