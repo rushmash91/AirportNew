@@ -22,7 +22,18 @@
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
 
-
+ <table border="solid">
+  {% for result in results %}
+    <tr>
+        <td>{{ result.ffa_num }}</td>
+        <td>{{ result.name }}</td>
+        <td>{{ result.max_score }}</td>
+        <td>{{ result.modelnumber }}</td>
+        <td><a href="/Airport/updateTest/{{ result.ffa_num }}">UPDATE</a></td>
+        <td><a href="123456789">DELETE</a></td>
+    </tr>
+	  {% endfor %}
+  </table>
 
 
 </body>

@@ -116,3 +116,105 @@ def updateTR(request, ssn, regnum, ffa_num):
         ]
         print(results)
     return render(request, 'mainApp/admin-TRupdate.html', {'results': results})
+
+
+def viewUnion(request):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM unions')
+        columns = [col[0] for col in cursor.description]
+        results = [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        print(results)
+    return render(request, 'mainApp/admin-unionview.html', {'results': results})
+
+
+def updateUnion(request, union_num):
+
+    if request.method == "POST":
+        data = querydict_to_dict(request.POST)
+        print(data)
+        with connection.cursor() as cursor:
+            sqlQuery = 'UPDATE unions set name = "{}" where union_num={}'
+            sqlQuery = sqlQuery.format(data['NAME'], data['UNIONNUM'])
+            cursor.execute(sqlQuery)
+        url = '/Airport/viewUnion'
+        resp_body = '<script>alert("The record was updated");\
+             window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM unions where union_num=%s', union_num)
+        columns = [col[0] for col in cursor.description]
+        results=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        print(results)
+    return render(request, 'mainApp/admin-unionupdate.html', {'results': results})
+
+
+def AddUnion(request):
+    if request.method == "POST":
+        data = querydict_to_dict(request.POST)
+        print(data)
+        with connection.cursor() as cursor:
+            cursor.execute('INSERT INTO unions VALUES ( %s, %s)', (data["UNIONNUMBER"], data["UNIONNAME"]))
+            row = cursor.fetchall()
+            print(row)
+        url = '/Airport/viewUnion'
+        resp_body = '<script>alert("The record was added");\
+                     window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
+    return render(request, 'mainApp/admin-union.html')
+
+
+def AddTest(request):
+    if request.method == "POST":
+        data = querydict_to_dict(request.POST)
+        print(data)
+        with connection.cursor() as cursor:
+            cursor.execute('INSERT INTO test VALUES ( %s, %s, %s, %s)', (data["FFANUMBER"], data["TNAME"], data["MAXSCORE"], data["MODELNUMBER"]))
+            row = cursor.fetchall()
+            print(row)
+        url = '/Airport'
+        resp_body = '<script>alert("The record was added");\
+                     window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
+    return render(request, 'mainApp/admin-managetest.html')
+
+
+def viewTest(request):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM test')
+        columns = [col[0] for col in cursor.description]
+        results = [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        print(results)
+    return render(request, 'mainApp/admin-managetestupdate.html', {'results': results})
+
+
+def updateTest(request, ffa_num):
+
+    if request.method == "POST":
+        data = querydict_to_dict(request.POST)
+        print(data)
+        with connection.cursor() as cursor:
+            sqlQuery = 'UPDATE test set name="{}", max_score="{}", modelnumber="{}" where ffa_num={}'
+            sqlQuery = sqlQuery.format(data['NAME'], data['MAXSCORE'], data['MODELNUMBER'], data['FFANUM'])
+            cursor.execute(sqlQuery)
+        url = '/Airport/viewTest'
+        resp_body = '<script>alert("The record was updated");\
+             window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM test where ffa_num=%s', ffa_num)
+        columns = [col[0] for col in cursor.description]
+        results=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        print(results)
+    return render(request, 'mainApp/admin-managetest.html', {'results': results})

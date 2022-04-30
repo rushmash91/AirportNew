@@ -22,20 +22,27 @@
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
   
-  <form class="container" onSubmit = "write" action="write.html" method="POST">
-
+  <form class="container" onSubmit = "write"  method="POST">{% csrf_token %}
+    {% for result in results %}
     <div>
-      <label>FFA NUMBER</label>
-      <input type="text" name="FFANUMBER" id="ffanumber" placeholder="Enter FFA Number">
+      <label>FFANUM</label>
+      <input type="text" name="FFANUM" id="ffanum" placeholder="Enter FFA No." value="{{ result.ffa_num }}" readonly>
     </div>
     <div>
-      <label>TEST NAME</label>
-      <input type="text" name="TNAME" id="tname" placeholder="Enter Test Name">
+      <label>NAME</label>
+      <input type="text" name="NAME" id="name" placeholder="Enter Name" value="{{ result.name }}">
     </div>
-   
-   
+        <div>
+      <label>MAXSCORE</label>
+      <input type="text" name="MAXSCORE" id="maxscore" placeholder="Enter Max Score" value="{{ result.max_score }}">
+    </div>
     <div>
-      <button>Submit Test</button>
+      <label>MODELNUMBER</label>
+      <input type="text" name="MODELNUMBER" id="modelnumber" placeholder="Enter Name" value="{{ result.modelnumber }}">
+    </div>
+    {% endfor %}
+    <div>
+      <button>Submit</button>
     </div>
   </form>
 

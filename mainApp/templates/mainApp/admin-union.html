@@ -22,7 +22,7 @@
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
   
-  <form class="container" onSubmit = "write" action="write.html" method="POST">
+  <form class="container" method="POST">{% csrf_token %}
 
     <div>
       <label>UNION NUMBER</label>
@@ -30,7 +30,7 @@
     </div>
     <div>
       <label>UNION NAME</label>
-      <input type="text" name="UNION NAME" id="unionname" placeholder="Enter Union Name">
+      <input type="text" name="UNIONNAME" id="unionname" placeholder="Enter Union Name">
     </div>
    
    

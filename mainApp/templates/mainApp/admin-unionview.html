@@ -22,7 +22,16 @@
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
 
-
+ <table border="solid">
+  {% for result in results %}
+    <tr>
+    <td>{{ result.union_num }}</td>
+    <td>{{ result.name }}</td>
+    <td><a href="/Airport/updateUnion/{{ result.union_num }}">UPDATE</a></td>
+    <td><a href="123456789">DELETE</a></td>
+    </tr>
+	  {% endfor %}
+  </table>
 
 
 </body>
