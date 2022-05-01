@@ -14,6 +14,7 @@ def querydict_to_dict(query_dict):
         data[key] = v
     return data
 
+
 def registerPage(request):
     form = UserCreationForm()
     if request.method == 'POST':
@@ -34,6 +35,7 @@ def loginPage(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             login(request, user)
             return redirect('/Airport/')
@@ -53,7 +55,6 @@ def AddEmployee(request):
             cursor.execute('SELECT e.name, e.ssn, u.union_num FROM employee as e, unionmembership as u where u.ssn=e.ssn')
             row = cursor.fetchall()
             print(row)
-        #print(data.NAME)  
     return render(request, 'mainApp/admin-addemp.html')
 
 
@@ -202,13 +203,14 @@ def AddTest(request):
         data = querydict_to_dict(request.POST)
         print(data)
         with connection.cursor() as cursor:
-            cursor.execute('INSERT INTO test VALUES ( %s, %s, %s, %s)', (data["FFANUMBER"], data["TNAME"], data["MAXSCORE"], data["MODELNUMBER"]))
+            cursor.execute('INSERT INTO test VALUES ( %s, %s, %s, %s)', (data["FFANUM"], data["NAME"], data["MAXSCORE"], data["MODELNUMBER"]))
             row = cursor.fetchall()
             print(row)
         url = '/Airport'
         resp_body = '<script>alert("The record was added");\
                      window.location="%s"</script>' % url
         return HttpResponse(resp_body)
+
     return render(request, 'mainApp/admin-managetest.html')
 
 
