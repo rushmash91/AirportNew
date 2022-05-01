@@ -9,7 +9,7 @@
 <body>
 
   <div class="topnav">
-    <a class="active" href="admin-home.html">Home</a>
+    <a class="active" href="/Airport">Home</a>
     <div class="topnav-right">
       <a href="#Profile">Profile</a>
       <a href="#Logout">Logout</a>
@@ -23,6 +23,16 @@
   </div>
 
 <table border="solid">
+  <tr>
+    <th> EMP CODE </th>
+    <th> TIMPESTAMP </th>
+    <th> PLANE REG NUM </th>
+    <th> FAA NUM </th>
+    <th> TEST SCORE </th>
+    <th> HOURS ON TEST </th>
+    <th> UPDATE </th>
+    <th> DELETE </th>
+  </tr>
   {% for result in results %}
     <tr>
     <td>{{ result.ssn }}</td>

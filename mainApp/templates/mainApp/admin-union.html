@@ -3,13 +3,13 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="{% static 'mainApp/styles/Style.css' %}">
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
 </head>
 
 <body>
 
   <div class="topnav">
-    <a class="active" href="admin-home.html">Home</a>
+    <a class="active" href="/Airport">Home</a>
     <div class="topnav-right">
       <a href="#Profile">Profile</a>
       <a href="#Logout">Logout</a>
@@ -21,7 +21,7 @@
     <h1 class="centered">ADD UNION</h1>
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
-  
+
   <form class="container" method="POST">{% csrf_token %}
 
     <div>
@@ -32,8 +32,8 @@
       <label>UNION NAME</label>
       <input type="text" name="UNIONNAME" id="unionname" placeholder="Enter Union Name">
     </div>
-   
-   
+
+
     <div>
       <button>Submit Union</button>
     </div>

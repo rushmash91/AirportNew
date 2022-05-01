@@ -3,13 +3,13 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="{% static 'mainApp/styles/Style.css' %}">
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
 </head>
 
 <body>
 
   <div class="topnav">
-    <a class="active" href="admin-home.html">Home</a>
+    <a class="active" href="/Airport">Home</a>
     <div class="topnav-right">
       <a href="#Profile">Profile</a>
       <a href="#Logout">Logout</a>
@@ -21,14 +21,15 @@
     <h1 class="centered">ADD MEMBERSHIP INFO</h1>
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
-  
-  <form class="container" onSubmit = "write" action="write.html" method="POST">
+
+  <form class="container" method="POST"> {% csrf_token %}
 
     <div>
         <label>UNION NUMBER</label>
         <select name="unionnumber" id="unionnumber">
-          <option value="write">123</option>.   <!--UPDATE TO POPULATE DATA I DROPDOWN -->
-          <option value="write">456</option>
+          {% for unions in union %}
+          <option value="{{ unions.union_num }}">{{ unions.union_num }}</option>   <!--UPDATE TO POPULATE DATA I DROPDOWN -->
+          {% endfor %}
         </select>
     </div>
     <div>
@@ -37,10 +38,15 @@
     </div>
     <div>
       <label>SSN</label>
-      <input type="text" name="SSN" id="ssn" placeholder="Enter SSN">
+      <select name="SSN" id="ssn">
+        {% for ssns in ssn %}
+            <option value="{{ ssns.ssn }}">{{ ssns.ssn }}</option>  <!--UPDATE TO POPULATE DATA I DROPDOWN -->
+        {% endfor %}
+      </select>
+
     </div>
-   
-   
+
+
     <div>
       <button>Submit</button>
     </div>

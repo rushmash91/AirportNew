@@ -3,13 +3,13 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="{% static 'mainApp/styles/Style.css' %}">
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
 </head>
 
 <body>
 
   <div class="topnav">
-    <a class="active" href="admin-home.html">Home</a>
+    <a class="active" href="/Airport">Home</a>
     <div class="topnav-right">
       <a href="#Profile">Profile</a>
       <a href="#Logout">Logout</a>
@@ -21,8 +21,8 @@
     <h1 class="centered">ADD PLANE</h1>
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
-  
-  <form class="container" onSubmit = "write" action="write.html" method="POST">
+
+  <form class="container"   method="POST">{% csrf_token %}
 
     <div>
       <label>REG NUMBER</label>
@@ -30,10 +30,14 @@
     </div>
     <div>
       <label>MODEL NUMBER</label>
-      <input type="text" name="MODELNUMBER" id="modelnumber" placeholder="Enter Model Number">
+      <select name="MODELNUMBER" id="modelnumber">
+        {% for plane in results %}
+        <option value="{{ plane.modelnumber }}">{{ plane.modelnumber }}</option>
+        {% endfor %}
+      </select>
     </div>
-   
-   
+
+
     <div>
       <button>Submit Plane</button>
     </div>

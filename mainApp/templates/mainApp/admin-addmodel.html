@@ -3,13 +3,13 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="{% static 'mainApp/styles/Style.css' %}">
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
 </head>
 
 <body>
 
   <div class="topnav">
-    <a class="active" href="admin-home.html">Home</a>
+    <a class="active" href="/Airport">Home</a>
     <div class="topnav-right">
       <a href="#Profile">Profile</a>
       <a href="#Logout">Logout</a>
@@ -21,8 +21,8 @@
     <h1 class="centered">ADD MODEL</h1>
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
-  
-  <form class="container" onSubmit = "write2" action="write.html" method="POST">
+
+  <form class="container"   method="POST">{% csrf_token %}
 
     <div>
       <label>MODEL NUMBER</label>
@@ -40,7 +40,7 @@
       <label>WEIGHT</label>
       <input type="text" name="WEIGHT" id="weight" placeholder="Enter Weight">
     </div>
-   
+
     <div>
       <button>Submit Model</button>
     </div>

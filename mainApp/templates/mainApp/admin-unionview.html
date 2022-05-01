@@ -9,7 +9,7 @@
 <body>
 
   <div class="topnav">
-    <a class="active" href="admin-home.html">Home</a>
+    <a class="active" href="/Airport">Home</a>
     <div class="topnav-right">
       <a href="#Profile">Profile</a>
       <a href="#Logout">Logout</a>
@@ -23,10 +23,18 @@
   </div>
 
  <table border="solid">
+   <tr>
+     <th> UNION NUMBER </th>
+     <th> UNION NAME </th>
+     <th> UNION MEMBER COUNT </th>
+     <th> UPDATE </th>
+     <th> DELETE </th>
+   </tr>
   {% for result in results %}
     <tr>
     <td>{{ result.union_num }}</td>
     <td>{{ result.name }}</td>
+    <td>{{ result.num }}</td>
     <td><a href="/Airport/updateUnion/{{ result.union_num }}">UPDATE</a></td>
     <td><a href="123456789">DELETE</a></td>
     </tr>

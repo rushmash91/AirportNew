@@ -3,13 +3,13 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="{% static 'mainApp/styles/Style.css' %}">
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
 </head>
 
 <body>
 
   <div class="topnav">
-    <a class="active" href="admin-home.html">Home</a>
+    <a class="active" href="/Airport">Home</a>
     <div class="topnav-right">
       <a href="#Profile">Profile</a>
       <a href="#Logout">Logout</a>
@@ -27,7 +27,7 @@
     {% for result in results %}
     <div>
       <label>TIMESTAMP</label>
-      <input type="text" name="TIMESTAMP" id="timestmp" placeholder="Enter Timestamp" value="{{ result.timestmp }}">
+      <input type="text" name="TIMESTAMP" id="timestmp" placeholder="Enter Timestamp" value="{{ result.timestmp }}" readonly>
     </div>
     <div>
       <label>SSN</label>

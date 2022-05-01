@@ -3,7 +3,7 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="{% static 'mainApp/styles/Style.css' %}">
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
 </head>
 
 <body>
@@ -21,7 +21,7 @@
     <h1 class="centered">ADD EMPLOYEE</h1>
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
- 
+
   <form class="container" onSubmit = "write"  method="POST">{% csrf_token %}
     <div>
       <label>NAME</label>
@@ -33,7 +33,10 @@
     </div>
     <div>
       <label>SEX</label>
-      <input type="text" name="SEX" id="sex" placeholder="Enter Sex">
+      <select name="SEX" id="sex">
+        <option value="M">MALE</option>
+        <option value="F">FEMALE</option>
+      </select>
     </div>
     <div>
       <label>PHONE NUMBER</label>
@@ -57,7 +60,10 @@
     </div>
     <div>
       <label>EMPLOYEE TYPE</label>
-      <input type="text" name="EMPLOYEETYPE" id="employeetype" placeholder="Enter Type of Employee">
+      <select name="EMPLOYEETYPE" id="employeetype">
+        <option value="ATC">ATC</option>
+        <option value="Technician">Technician</option>
+      </select>
     </div>
     <div>
       <label>USERNAME</label>

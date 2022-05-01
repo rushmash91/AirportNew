@@ -21,8 +21,20 @@
     <h1 class="centered">VIEW EMPLOYEES</h1>
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
-  <table border="solid">
-  {% for result in results %}  
+  <div>
+  <table>
+    <tr>
+      <td>SSN</td>
+      <td>NAME</td>
+      <td>PHONE</td>
+      <td>SEX</td>
+      <td>SALARY</td>
+      <td>STREE</td>
+      <td>CITY</td>
+      <td>COUNTRY</td>
+      <td>UPDATE</td>
+    </tr>
+  {% for result in results %}
     <tr>
     <td>{{ result.ssn }}</td>
     <td>{{ result.name }}</td>
@@ -33,13 +45,13 @@
     <td>{{ result.city }}</td>
     <td>{{ result.country }}</td>
     <td><a href="/Airport/updateEmp/{{ result.ssn }}">UPDATE</a></td>
-    <td><a href="123456789">DELETE</a></td>
     </tr>
-	  {% endfor %} 
+	  {% endfor %}
   </table>
+</div>
 
 
-  
+
 
 
 </body>

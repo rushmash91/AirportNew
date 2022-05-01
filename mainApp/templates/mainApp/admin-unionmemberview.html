@@ -9,7 +9,7 @@
 <body>
 
   <div class="topnav">
-    <a class="active" href="admin-home.html">Home</a>
+    <a class="active" href="/Airport">Home</a>
     <div class="topnav-right">
       <a href="#Profile">Profile</a>
       <a href="#Logout">Logout</a>
@@ -22,7 +22,22 @@
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
 
-
+  <table>
+    <tr>
+        <th>SSN</th>
+        <th>UNION NUMBER</th>
+        <th>MEMBERSHIP NUMBER</th>
+        <th>DELETE</th>
+    </tr>
+    {% for result in results %}
+      <tr>
+      <td>{{ result.ssn }}</td>
+      <td>{{ result.union_num }}</td>
+      <td>{{ result.mem_num }}</td>
+      <td><a href="">DELETE</a></td>
+      </tr>
+      {% endfor %}
+    </table>
 
 
 </body>

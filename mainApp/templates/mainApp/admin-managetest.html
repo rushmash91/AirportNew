@@ -3,13 +3,13 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="{% static 'mainApp/styles/Style.css' %}">
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
 </head>
 
 <body>
 
   <div class="topnav">
-    <a class="active" href="admin-home.html">Home</a>
+    <a class="active" href="/Airport">Home</a>
     <div class="topnav-right">
       <a href="#Profile">Profile</a>
       <a href="#Logout">Logout</a>
@@ -21,7 +21,7 @@
     <h1 class="centered">MANAGE TEST</h1>
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
-  
+
   <form class="container"  method="POST">{% csrf_token %}
     <div>
       <label>FFANUM</label>
@@ -33,11 +33,11 @@
     </div>
         <div>
       <label>MAXSCORE</label>
-      <input type="text" name="MAXSCORE" id="maxscore" placeholder="Enter Max Score"">
-    </div>
+      <input type="text" name="MAXSCORE" id="maxscore" placeholder="Enter Max Score">
+      </div>
     <div>
       <label>MODELNUMBER</label>
-      <input type="text" name="MODELNUMBER" id="modelnumber" placeholder="Enter Model number"">
+      <input type="text" name="MODELNUMBER" id="modelnumber" placeholder="Enter Model number">
     </div>
     <div>
       <button>Submit</button>
