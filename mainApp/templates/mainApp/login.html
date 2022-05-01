@@ -1,0 +1,29 @@
+{% load static %}
+<!Doctype html>
+<html>
+<head>
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style.css' %}">
+</head>
+<body>
+
+<div class="topnav">
+  <a class="active" href="admin-home.html">Home</a>
+  <div class="topnav-right">
+    <a href="#Profile">Profile</a>
+    <a href="#Logout">Logout</a>
+  </div>
+</div>
+
+<div class="container">
+  <img src="{% static 'mainApp/images/Airport.jpg' %}" width=100% height="300" alt="Snow" >
+  <h1 class="centered">AIRPORT MANAGEMENT SYSTEM</h1>
+    <div class="top-left">LOGIN</div>
+</div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <input type="text" name="username">
+        <input type="text" name="password">
+        <input type="submit" name="Login">
+    </form>
+</body>
+</html>

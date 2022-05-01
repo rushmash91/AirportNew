@@ -15,4 +15,6 @@ urlpatterns = [
     path('Airport/AddTest/', views.AddTest),
     path('Airport/viewTest/', views.viewTest),
     path('Airport/updateTest/<int:ffa_num>', views.updateTest),
+    path('Airport/register', views.registerPage),
+    path('Airport/login', views.loginPage),
 ]

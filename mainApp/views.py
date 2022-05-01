@@ -1,6 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.db import connection
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login, logout
 
 
 def querydict_to_dict(query_dict):
@@ -11,6 +13,32 @@ def querydict_to_dict(query_dict):
             v = v[0]
         data[key] = v
     return data
+
+def registerPage(request):
+    form = UserCreationForm()
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get('username')
+        url = '/Airport'
+        resp_body = '<script>alert("The user was created and logged in");\
+             window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
+    context = {'form': form}
+    return render(request, 'mainApp/register.html', context)
+
+
+def loginPage(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('/Airport/')
+    context = {}
+    return render(request, 'mainApp/login.html', context)
 
 
 def index(request):
