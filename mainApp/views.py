@@ -4,7 +4,7 @@ from django.db import connection
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+import datetime
 
 def querydict_to_dict(query_dict):
     data = {}
@@ -110,21 +110,26 @@ def AddEmployee(request):
                     resp_body = '<script>alert("The record with ssn {} already exisits ");\
                     window.location="{}"</script>'.format(data['SSN'],url)
                     return HttpResponse(resp_body)
-            employee_query='INSERT into employee(ssn,name,phone,sex,salary,street,city,country,username) values ({},"{}", {}, "{}", {}, "{}", "{}","{}","{}")'
-            employee_query=employee_query.format(data['SSN'],data['NAME'],data['PHONENUMBER'],data['SEX'],data['SALARY'],data['STREET'],data['CITY'],data['COUNTRY'],data['USERNAME'])
+            employee_query='INSERT into employee(ssn,name,phone,sex,salary,street,city,country,STATUS) values ({},"{}", {}, "{}", {}, "{}", "{}","{}","ACTIVE")'
+            employee_query=employee_query.format(data['SSN'],data['NAME'],data['PHONENUMBER'],data['SEX'],data['SALARY'],data['STREET'],data['CITY'],data['COUNTRY'])
             emp_user='insert into employee_username values({},"{}")'
             emp_user=emp_user.format(data['SSN'],data['USERNAME'])
             if data['EMPLOYEETYPE']=='Technician':
                 emp_Type='INSERT into Technician(ssn) values ({})'
                 emp_Type=emp_Type.format(data['SSN'])
             else:
-                emp_Type='INSERT into Atc(ssn,medexamdate) values ({},NULL)'
+                emp_Type='INSERT into Atc (ssn,medexamdate) values ({},NULL)'
                 emp_Type=emp_Type.format(data['SSN'])
-            credential='INSERT into employee_credentials(username,password) values("{}","{}")'
+            credential='INSERT into employee_credentials values("{}","{}")'
             credential=credential.format(data['USERNAME'],data['PASSWORD'])
             with connection.cursor() as cursor:
-                cursor.execute('SELECT e.name, e.ssn, u.union_num FROM employee as e, unionmembership as u where u.ssn=e.ssn')
-                row = cursor.fetchall()
+                cursor.execute(employee_query)
+                cursor.execute(emp_user)
+                cursor.execute(credential)
+                cursor.execute(emp_Type)
+            #with connection.cursor() as cursor:
+                #cursor.execute('SELECT e.name, e.ssn, u.union_num FROM employee as e, unionmembership as u where u.ssn=e.ssn')
+                #row = cursor.fetchall()
             resp_body = '<script>alert("The record was added");\
                  window.location="%s"</script>' % url
             return HttpResponse(resp_body)
@@ -156,7 +161,7 @@ def AddEmp(request):
 def viewEmp(request):
     if request.user.is_staff:
         with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM employee ')
+            cursor.execute('SELECT * FROM employee where STATUS="ACTIVE"')
             #row = cursor.fetchall()
             columns = [col[0] for col in cursor.description]
             results=[
@@ -204,6 +209,23 @@ def updateEmp(request,ssn):
              window.location="%s"</script>' % url
         return HttpResponse(resp_body)
 
+@login_required(login_url='/Airport/login')
+def deleteEmp(request,ssn):
+    if request.user.is_staff:
+        with connection.cursor() as cursor:
+            cursor.execute('update employee set STATUS="DEACTIVE" where ssn= %s',ssn)
+            cursor.execute('update atc set STATUS="DEACTIVE" where ssn= %s',ssn)
+            cursor.execute('update technician set STATUS="DEACTIVE" where ssn= %s',ssn)
+            cursor.execute('delete from unionmembership where ssn= %s',ssn)
+            
+        url = '/Airport/viewEmp'
+        resp_body = '<script>alert("The user was deleted with ssn = {} "); window.location="{}"</script>'.format(ssn,url)
+        return HttpResponse(resp_body)
+    else:
+        url = '/Airport/login'
+        resp_body = '<script>alert("The user is not admin");\
+             window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
 
 @login_required(login_url='/Airport/login')
 def addModel(request):
@@ -333,8 +355,22 @@ def viewUnionMem(request):
         resp_body = '<script>alert("The user is not admin");\
              window.location="%s"</script>' % url
         return HttpResponse(resp_body)
-
-
+@login_required(login_url='/Airport/login')
+def viewAllPlane(request):
+    if request.user.is_staff:
+        with connection.cursor() as cursor:
+            cursor.execute('select a.regnum,m.modelnumber,m.name,m.capacity,m.weight from airplane a join model m where a.modelnumber=m.modelnumber')
+            columns = [col[0] for col in cursor.description]
+            results=[
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+            ]
+        return render(request, 'mainApp/admin-viewPlane.html', {'results': results})
+    else:
+        url = '/Airport/login'
+        resp_body = '<script>alert("The user is not admin");\
+             window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
 @login_required(login_url='/Airport/login')
 def viewTR(request):
     if request.user.is_staff:
@@ -361,9 +397,9 @@ def updateTR(request, ssn, regnum, ffa_num):
             data = querydict_to_dict(request.POST)
             print(data)
             with connection.cursor() as cursor:
-                sqlQuery = 'UPDATE test_records set timestmp = "{}", score = {}, hour = "{}" where ssn = {} AND' \
+                sqlQuery = 'UPDATE test_records set score = {}, hour = "{}" where ssn = {} AND' \
                            ' regnum = {} AND ffa_num = {}'
-                sqlQuery = sqlQuery.format(data['TIMESTAMP'], data['SCORE'], data['HOUR'], data['SSN'], data['REGNUM'],
+                sqlQuery = sqlQuery.format(data['SCORE'], data['HOUR'], data['SSN'], data['REGNUM'],
                                            data['FFANUM']
         )
                 cursor.execute(sqlQuery)
@@ -391,7 +427,7 @@ def updateTR(request, ssn, regnum, ffa_num):
 def viewUnion(request):
     if request.user.is_staff:
         with connection.cursor() as cursor:
-            cursor.execute('select unionmembership.union_num,unions.name, count(*) as num from unionmembership join unions on unionmembership.union_num=unions.union_num group by unionmembership.union_num,unions.name')
+            cursor.execute('select unions.union_num,unions.name, count(*) as num from unionmembership right join unions on unionmembership.union_num=unions.union_num group by unions.union_num,unions.name')
             columns = [col[0] for col in cursor.description]
             results = [
             dict(zip(columns, row))
@@ -472,7 +508,8 @@ def AddTest(request):
             resp_body = '<script>alert("The record was added");\
                          window.location="%s"</script>' % url
             return HttpResponse(resp_body)
-        return render(request, 'mainApp/admin-managetest.html')
+        page="normal"
+        return render(request, 'mainApp/admin-managetest.html',{"page": page })
     else:
         url = '/Airport/login'
         resp_body = '<script>alert("The user is not admin");\
@@ -491,7 +528,7 @@ def viewTest(request):
             for row in cursor.fetchall()
             ]
             print(results)
-        return render(request, 'mainApp/admin-managetestupdate.html', {'results': results})
+        return render(request, 'mainApp/admin-managetestupdate.html', {'results': results, 'page': ""})
     else:
         url = '/Airport/login'
         resp_body = '<script>alert("The user is not admin");\
@@ -1012,7 +1049,7 @@ def techAddTR(request):
             data = querydict_to_dict(request.POST)
             print(data)
             with connection.cursor() as cursor:
-                cursor.execute('INSERT INTO test_records VALUES ( %s, %s, %s, %s, %s, %s)', (data["TIMESTAMP"], data["SSN"], data["REGNUM"], data["FFANUM"], data["SCORE"], data["HOUR"]))
+                cursor.execute('INSERT INTO test_records VALUES ( now (), %s, %s, %s, %s, %s)', (data["SSN"], data["REGNUM"], data["FFANUM"], data["SCORE"], data["HOUR"]))
                 row = cursor.fetchall()
                 print(row)
             url = '/Airport/techhome'
@@ -1024,4 +1061,27 @@ def techAddTR(request):
         url = '/Airport/login'
         resp_body = '<script>alert("The user is not Technician");\
                                  window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
+
+
+def deleteUniMem(request,ssn,union_num,mem_num):
+    if request.user.is_staff:
+        query='select * from unionmembership where ssn= {}'.format(ssn)
+        delquery='delete from unionmembership where ssn= {} and union_num = {} and mem_num = {}'.format(ssn,union_num,mem_num)
+        url='/Airport/viewMemberShip'
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            if cursor.rowcount == 1:
+                resp_body = '<script>alert("The record with ssn {} is part of only one union, cannot delete ");\
+                window.location="{}"</script>'.format(ssn,url)
+                return HttpResponse(resp_body)
+            cursor.execute(delquery)
+            resp_body = '<script>alert("The record with ssn {} and union_num = {} and mem_num = {}  deleted ");\
+                window.location="{}"</script>'.format(ssn,union_num,mem_num,url)
+            return HttpResponse(resp_body)
+            
+    else:
+        url = '/Airport/login'
+        resp_body = '<script>alert("The user is not admin");\
+             window.location="%s"</script>' % url
         return HttpResponse(resp_body)

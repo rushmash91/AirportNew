@@ -31,7 +31,6 @@
     <th> TEST SCORE </th>
     <th> HOURS ON TEST </th>
     <th> UPDATE </th>
-    <th> DELETE </th>
   </tr>
   {% for result in results %}
     <tr>
@@ -42,7 +41,6 @@
     <td>{{ result.score }}</td>
     <td>{{ result.hour }}</td>
     <td><a href="/Airport/updateTR/{{ result.ssn }}/{{ result.regnum }}/{{ result.ffa_num }}">UPDATE</a></td>
-    <td><a href="123456789">DELETE</a></td>
     </tr>
   {% endfor %}
   </table>
