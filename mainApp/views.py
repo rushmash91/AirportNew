@@ -42,7 +42,15 @@ def loginPage(request):
 
 
 def index(request):
-    return render(request, 'mainApp/admin-home.html')
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM number_technicians')
+        columns = [col[0] for col in cursor.description]
+        results=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        result = results[0]['COUNT(*)']
+    return render(request, 'mainApp/admin-home.html', {'result': result})
 
 
 def AddEmployee(request):
@@ -376,3 +384,25 @@ def updateTest(request, ffa_num):
         ]
         print(results)
     return render(request, 'mainApp/admin-managetest.html', {'results': results})
+
+
+def bestscore(request):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM best_score')
+        columns = [col[0] for col in cursor.description]
+        results=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+    return render(request, 'mainApp/bestscore.html', {'results': results[0]})
+
+
+def testdelay(request):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM test_delay')
+        columns = [col[0] for col in cursor.description]
+        results=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+    return render(request, 'mainApp/testdelay.html', {'results': results[0]})

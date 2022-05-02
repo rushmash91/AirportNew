@@ -22,4 +22,6 @@ urlpatterns = [
     path('Airport/updateTest/<int:ffa_num>', views.updateTest),
     path('Airport/register', views.registerPage),
     path('Airport/login', views.loginPage),
+    path('Airport/bestscore/', views.bestscore),
+    path('Airport/testdelay/', views.testdelay),
 ]

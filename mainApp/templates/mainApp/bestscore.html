@@ -1,0 +1,53 @@
+{% load static %}
+<!Doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
+</head>
+
+<body>
+
+  <div class="topnav">
+    <a class="active" href="/Airport">Home</a>
+    <div class="topnav-right">
+      <a href="#Profile">Profile</a>
+      <a href="#Logout">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <img src="{% static 'mainApp/images/Airport.jpg' %}" width=100% height="300" alt="Snow">
+    <h1 class="centered">Best Score</h1>
+    <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
+  </div>
+ <table border="solid">
+   <tr>
+     <th> FIELDS </th>
+     <th> VALUES </th>
+   </tr>
+    <tr>
+    <td>SSN</td>
+    <td>{{ results.ssn }}</td>
+          </tr>
+         <tr>
+    <td>REG NUM</td>
+    <td>{{ results.regnum }}</td>
+          </tr>
+         <tr>
+    <td>FFA NUM</td>
+    <td>{{ results.ffa_num }}</td>
+          </tr>
+    <tr>
+    <td>SCORE</td>
+    <td><b>{{ results.score }}</b></td>
+          </tr>
+    <tr>
+    <td>HOURS</td>
+    <td>{{ results.hour }}</td>
+          </tr>
+  </table>
+
+</body>
+
+</html>

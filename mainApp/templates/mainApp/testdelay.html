@@ -1,0 +1,46 @@
+{% load static %}
+<!Doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
+</head>
+
+<body>
+
+  <div class="topnav">
+    <a class="active" href="/Airport">Home</a>
+    <div class="topnav-right">
+      <a href="#Profile">Profile</a>
+      <a href="#Logout">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <img src="{% static 'mainApp/images/Airport.jpg' %}" width=100% height="300" alt="Snow">
+    <h1 class="centered">Test Delay</h1>
+    <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
+  </div>
+ <table border="solid">
+   <tr>
+     <th> FIELDS </th>
+     <th> VALUES </th>
+   </tr>
+    <tr>
+    <td>NAME</td>
+    <td>{{ results.name }}</td>
+          </tr>
+         <tr>
+
+    <td>REG NUM</td>
+    <td>{{ results.regnum }}</td>
+          </tr>
+    <tr>
+    <td>SCORE</td>
+    <td>{{ results.score }}</td>
+          </tr>
+  </table>
+
+</body>
+
+</html>
