@@ -9,6 +9,7 @@ urlpatterns = [
     path('addEmp/', views.AddEmp),
     path('Airport/viewEmp/', views.viewEmp),
     path('Airport/updateEmp/<int:ssn>', views.updateEmp),
+    path('Airport/deleteEmp/<int:ssn>', views.deleteEmp),
     path('Airport/addModel', views.addModel),
     path('Airport/addPlane', views.addPlane),
     path('Airport/addUnionMember', views.addUnionMember),
@@ -39,4 +40,6 @@ urlpatterns = [
     path('Airport/techaddexp', views.techAddExpertise),
     path('Airport/techaddTR', views.techAddTR),
     path('Airport/logout', views.logout_view),
+    path('Airport/deleteUniMem/<int:ssn>/<int:union_num>/<int:mem_num>', views.deleteUniMem),
+    path('Airport/viewAllPlane', views.viewAllPlane),
 ]

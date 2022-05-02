@@ -18,29 +18,28 @@
 
   <div class="container">
     <img src="{% static 'mainApp/images/Airport.jpg' %}" width=100% height="300" alt="Snow">
-    <h1 class="centered">UPDATE A TEST</h1>
+    <h1 class="centered">ALL PLANE</h1>
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
 
- <table border="solid">
-   <tr>
-     <th> FFA NUMBER </th>
-     <th> TEST NAME </th>
-     <th> MAX SCORE </th>
-     <th> MODEL NUMBER </th>
-     <th> UPDATE </th>
-   </tr>
-  {% for result in results %}
+  <table>
     <tr>
-        <td>{{ result.ffa_num }}</td>
-        <td>{{ result.name }}</td>
-        <td>{{ result.max_score }}</td>
-        <td>{{ result.modelnumber }}</td>
-        <td><a href="/Airport/updateTest/{{ result.ffa_num }}">UPDATE</a></td>
-
+        <th>REG NUMBER</th>
+        <th>MODEL NUMBER</th>
+        <th>NAME</th>
+        <th>CAPACITY</th>
+        <th>WEIGHT</th>
     </tr>
-	  {% endfor %}
-  </table>
+    {% for result in results %}
+      <tr>
+      <td>{{ result.regnum }}</td>
+      <td>{{ result.modelnumber }}</td>
+      <td>{{ result.name }}</td>
+      <td>{{ result.capacity }}</td>
+      <td>{{ result.weight }}</td>
+      </tr>
+      {% endfor %}
+    </table>
 
 
 </body>

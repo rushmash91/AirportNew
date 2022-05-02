@@ -28,7 +28,6 @@
      <th> UNION NAME </th>
      <th> UNION MEMBER COUNT </th>
      <th> UPDATE </th>
-     <th> DELETE </th>
    </tr>
   {% for result in results %}
     <tr>
@@ -36,7 +35,6 @@
     <td>{{ result.name }}</td>
     <td>{{ result.num }}</td>
     <td><a href="/Airport/updateUnion/{{ result.union_num }}">UPDATE</a></td>
-    <td><a href="123456789">DELETE</a></td>
     </tr>
 	  {% endfor %}
   </table>

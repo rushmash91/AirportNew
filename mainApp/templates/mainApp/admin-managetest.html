@@ -21,7 +21,7 @@
     <h1 class="centered">MANAGE TEST</h1>
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
-
+  {% if page == "normal" %}
   <form class="container"  method="POST">{% csrf_token %}
     <div>
       <label>FFANUM</label>
@@ -43,9 +43,31 @@
       <button>Submit</button>
     </div>
   </form>
-
-
-
+{% else %}
+<form class="container"  method="POST">{% csrf_token %}
+  {% for result in results %}
+  <div>
+    <label>FFANUM</label>
+    <input type="text" name="FFANUM" id="ffanum" placeholder="Enter FFA No." value="{{ result.ffa_num }}" readonly>
+  </div>
+  <div>
+    <label>NAME</label>
+    <input type="text" name="NAME" id="name" placeholder="Enter Name" value="{{ result.name }}">
+  </div>
+      <div>
+    <label>MAXSCORE</label>
+    <input type="text" name="MAXSCORE" id="maxscore" placeholder="Enter Max Score" value="{{ result.max_score }}">
+    </div>
+  <div>
+    <label>MODELNUMBER</label>
+    <input type="text" name="MODELNUMBER" id="modelnumber" placeholder="Enter Model number" value="{{ result.modelnumber }}" readonly>
+  </div>
+  <div>
+    <button>Submit</button>
+  </div>
+</form>
+{% endfor %}
+{% endif %}
 </body>
 
 </html>

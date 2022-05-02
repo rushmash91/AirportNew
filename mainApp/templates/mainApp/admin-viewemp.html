@@ -33,6 +33,7 @@
       <td>CITY</td>
       <td>COUNTRY</td>
       <td>UPDATE</td>
+      <td>DELETE</td>
     </tr>
   {% for result in results %}
     <tr>
@@ -45,6 +46,7 @@
     <td>{{ result.city }}</td>
     <td>{{ result.country }}</td>
     <td><a href="/Airport/updateEmp/{{ result.ssn }}">UPDATE</a></td>
+    <td><a href="/Airport/deleteEmp/{{ result.ssn }}">DELETE</a></td>
     </tr>
 	  {% endfor %}
   </table>
