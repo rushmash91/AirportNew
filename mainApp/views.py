@@ -15,6 +15,7 @@ def querydict_to_dict(query_dict):
         data[key] = v
     return data
 
+
 def registerPage(request):
     form = UserCreationForm()
     if request.method == 'POST':
@@ -37,9 +38,44 @@ def loginPage(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('/Airport/')
+            if user.is_staff:
+                return redirect('/Airport/')
+            else:
+                userName = user.username
+                ssn = 0
+                with connection.cursor() as cursor:
+                    cursor.execute('select ssn from employee_username where username=%s', userName)
+                    columns = [col[0] for col in cursor.description]
+                    user = [
+                        dict(zip(columns, row))
+                        for row in cursor.fetchall()
+                    ]
+                    ssn = user[0]['ssn']
+                with connection.cursor() as cursor:
+                    cursor.execute('select ssn from atc')
+                    columns = [col[0] for col in cursor.description]
+                    r = [
+                        dict(zip(columns, row))
+                        for row in cursor.fetchall()
+                    ]
+                    atcs = [i['ssn'] for i in r]
+                    if ssn in atcs:
+                        return redirect('/Airport/ATC')
+                    else:
+                        return redirect('/Airport/techhome')
+        else:
+            url = '/Airport/login'
+            resp_body = '<script>alert("The user does not exist");\
+                 window.location="%s"</script>' % url
+            return HttpResponse(resp_body)
+
     context = {}
     return render(request, 'mainApp/login.html', context)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('/Airport/login')
 
 
 def index(request):
@@ -235,6 +271,7 @@ def addUnionMember(request):
 
     return render(request, 'mainApp/admin-unionmembership.html',{'ssn': ssn , 'union': union })
 
+
 def viewUnionMem(request):
     with connection.cursor() as cursor:
         cursor.execute('SELECT * FROM unionmembership')
@@ -408,8 +445,10 @@ def testdelay(request):
         ]
     return render(request, 'mainApp/testdelay.html', {'results': results[0]})
 
+
 def atcHome(request):
     return render(request,'mainApp/atc-home.html')
+
 
 def atcMedical(request):
     userName='shubhu'
@@ -440,6 +479,8 @@ def atcMedical(request):
         for row in cursor.fetchall()
         ]
     return render(request,'mainApp/ATC-medical.html',{'date': date[0]['medexamdate']})
+
+
 def atcMonitor(request):
     userName='shubhu'
     ssn=0
@@ -471,6 +512,7 @@ def atcMonitor(request):
         print(results)
     return render(request,'mainApp/ATC-monitor.html',{'results': results} )
 
+
 def atcCurrent(request):
     userName='shubhu'
     ssn=0
@@ -493,6 +535,7 @@ def atcCurrent(request):
         print(results)
     return render(request,'mainApp/atc-cmp.html',{'results': results})
 
+
 def atcDelete(request, regnum):
     query='delete from monitor where regnum = {}'.format(regnum)
     with connection.cursor() as cursor:
@@ -501,6 +544,7 @@ def atcDelete(request, regnum):
     resp_body = '<script>alert("The regnum was Deleted");\
         window.location="%s"</script>' % url
     return HttpResponse(resp_body) 
+
 
 def atcStatus(request):
     query='select ssn, count(*) as num from monitor group by ssn'
@@ -511,7 +555,9 @@ def atcStatus(request):
             dict(zip(columns, row))
             for row in cursor.fetchall()
             ] 
-    return render(request,'mainApp/atc-view.html',{'results': results}) 
+    return render(request,'mainApp/atc-view.html',{'results': results})
+
+
 def updateProfile(request):
     userName='shubhu'
     ssn=0
@@ -544,4 +590,105 @@ def updateProfile(request):
         for row in cursor.fetchall()
         ] 
         print(results)
-    return render(request,'mainApp/updateProfile.html',{'results': results} ) 
+    return render(request,'mainApp/updateProfile.html',{'results': results} )
+
+# add tr
+
+
+def techHome(request):
+    return render(request,'mainApp/tech-home.html')
+
+
+def techviewTR(request):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM test_records')
+        columns = [col[0] for col in cursor.description]
+        results = [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        print(results)
+    return render(request, 'mainApp/tech-TRview.html', {'results': results})
+
+
+def viewExpertise(request):
+    userName='shavie'
+    ssn=0
+    with connection.cursor() as cursor:
+        cursor.execute('select ssn from employee_username where username=%s',userName)
+        columns = [col[0] for col in cursor.description]
+        user=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        ssn=user[0]['ssn']
+        print(ssn)
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM expertise where ssn=%s', ssn)
+        columns = [col[0] for col in cursor.description]
+        results = [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        print(results)
+    return render(request, 'mainApp/tech-viewExpertise.html', {'results': results})
+
+
+def techAddExpertise(request):
+    userName='shavie'
+    ssn=0
+    with connection.cursor() as cursor:
+        cursor.execute('select ssn from employee_username where username=%s',userName)
+        columns = [col[0] for col in cursor.description]
+        user=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        ssn=user[0]['ssn']
+        print(ssn)
+    with connection.cursor() as cursor:
+        cursor.execute('select modelnumber from model')
+        columns = [col[0] for col in cursor.description]
+        modelnumbers=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+
+    if request.method == "POST":
+        data = querydict_to_dict(request.POST)
+        print(data)
+        with connection.cursor() as cursor:
+            cursor.execute('INSERT INTO expertise VALUES ( %s, %s)', (data["SSN"], data["MODELNUMBER"]))
+            row = cursor.fetchall()
+            print(row)
+        url = '/Airport/techhome'
+        resp_body = '<script>alert("The record was added");\
+                     window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
+    return render(request, 'mainApp/tech-addexpertise.html', {'ssn': ssn, 'modelnumbers':modelnumbers})
+
+
+def techAddTR(request):
+    userName='shavie'
+    ssn=0
+    with connection.cursor() as cursor:
+        cursor.execute('select ssn from employee_username where username=%s',userName)
+        columns = [col[0] for col in cursor.description]
+        user=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        ssn=user[0]['ssn']
+        print(ssn)
+    if request.method == "POST":
+        data = querydict_to_dict(request.POST)
+        print(data)
+        with connection.cursor() as cursor:
+            cursor.execute('INSERT INTO test_records VALUES ( %s, %s, %s, %s, %s, %s)', (data["TIMESTAMP"], data["SSN"], data["REGNUM"], data["FFANUM"], data["SCORE"], data["HOUR"]))
+            row = cursor.fetchall()
+            print(row)
+        url = '/Airport/techhome'
+        resp_body = '<script>alert("The record was added");\
+                     window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
+    return render(request, 'mainApp/tech-addTR.html', {'ssn': ssn})

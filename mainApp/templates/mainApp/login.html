@@ -19,10 +19,14 @@
   <h1 class="centered">AIRPORT MANAGEMENT SYSTEM</h1>
     <div class="top-left">LOGIN</div>
 </div>
-    <form method="POST" action="">
+    <form class="container" method="POST">
         {% csrf_token %}
-        <input type="text" name="username">
-        <input type="text" name="password">
+        <div>
+        <label>Username</label>
+        <input type="text" name="username"></div> <br/><br/>
+        <div>
+        <label>Passcode</label>
+        <input type="text" name="password"></div><br/><br/><br/>
         <input type="submit" name="Login">
     </form>
 </body>

@@ -1,7 +1,9 @@
 from django.urls import path
 from . import views
+from django.shortcuts import redirect
 
 urlpatterns = [
+    path('', lambda request: redirect('Airport/login', permanent=False)),
     path('Airport/', views.index),
     path('Airport/AddEmployee/', views.AddEmployee),
     path('addEmp/', views.AddEmp),
@@ -30,7 +32,11 @@ urlpatterns = [
     path('Airport/ATC-CURRENT', views.atcCurrent),
     path('Airport/atc-delete/<int:regnum>', views.atcDelete),
     path('Airport/ATC-Status', views.atcStatus),
+    path('Airport/techhome', views.techHome),
+    path('Airport/techTR', views.techviewTR),
     path('Airport/UpdateProfile', views.updateProfile),
-
-    
+    path('Airport/techexp', views.viewExpertise),
+    path('Airport/techaddexp', views.techAddExpertise),
+    path('Airport/techaddTR', views.techAddTR),
+    path('Airport/logout', views.logout_view),
 ]

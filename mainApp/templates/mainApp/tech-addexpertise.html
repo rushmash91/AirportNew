@@ -1,0 +1,50 @@
+{% load static %}
+<!Doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
+</head>
+
+<body>
+
+  <div class="topnav">
+    <a class="active" href="/Airport">Home</a>
+    <div class="topnav-right">
+      <a href="#Profile">Profile</a>
+      <a href="#Logout">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <img src="{% static 'mainApp/images/Airport.jpg' %}" width=100% height="300" alt="Snow">
+    <h1 class="centered">ADD EXPERTISE</h1>
+    <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
+  </div>
+
+  <form class="container"   method="POST">{% csrf_token %}
+
+    <div>
+      <label>SSN</label>
+      <input type="text" name="SSN" id="ssn" value="{{ ssn }}" readonly>
+    </div>
+    <div>
+      <label>MODEL NUMBER</label>
+      <select name="MODELNUMBER" id="modelnumber">
+        {% for modelnumber in modelnumbers %}
+        <option value="{{ modelnumber.modelnumber }}">{{ modelnumber.modelnumber }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+
+    <div>
+      <button>Submit</button>
+    </div>
+  </form>
+
+
+
+</body>
+
+</html>
