@@ -2,14 +2,14 @@
 <!Doctype html>
 <html>
 <head>
-  <link rel="stylesheet" href="{% static 'mainApp/styles/Style.css' %}">
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
 </head>
 <body>
 
 <div class="topnav">
   <a class="active" href="atc-home.html">Home</a>
   <div class="topnav-right">
-    <a href="#Profile">Profile</a>
+    <a href="/Airport/UpdateProfile">Profile</a>
     <a href="#Logout">Logout</a>
   </div>
 </div>
@@ -22,16 +22,16 @@
 
 
 <div class="h-500 center-v center-h btn-group" style="width:100%">
-  <a href="atc-book.html"> <button class="B1" style="height:80px;width:400px">BOOK/UPDATE MEDICAL RECORDS</button> </a>
-  <a href="atc-cmp.html"> <button style="height:80px;width:400px">CURRENT MONITORING PLANES</button> </a>
+  <a href="/Airport/ATC-Status"> <button class="B1" style="height:80px;width:400px">VIEW MONITORING STATS</button> </a>
+  <a href="/Airport/ATC-CURRENT"> <button style="height:80px;width:400px">CURRENT MONITORING PLANES</button> </a>
 </div>
 
 &nbsp; 
 
 
 <div class="h-500 center-v center-h btn-group" style="width:100%">
-  <a href="ATC-medical.html"> <button class="B1" style="height:80px;width:400px">UPDATE MEDICAL INFORMATION</button> </a>
-  <a href="ATC-monitor.html"> <button style="height:80px;width:400px">ADD MONITOR DETAILS</button> </a>
+  <a href="/Airport/ATC-MEDICAL"> <button class="B1" style="height:80px;width:400px">UPDATE MEDICAL INFORMATION</button> </a>
+  <a href="/Airport/ATC-MONITOR"> <button style="height:80px;width:400px">ADD MONITOR DETAILS</button> </a>
 </div>
 
 

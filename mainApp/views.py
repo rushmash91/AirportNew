@@ -1,3 +1,4 @@
+from tkinter.messagebox import QUESTION
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.db import connection
@@ -406,3 +407,141 @@ def testdelay(request):
         for row in cursor.fetchall()
         ]
     return render(request, 'mainApp/testdelay.html', {'results': results[0]})
+
+def atcHome(request):
+    return render(request,'mainApp/atc-home.html')
+
+def atcMedical(request):
+    userName='shubhu'
+    ssn=0
+    with connection.cursor() as cursor:
+        cursor.execute('select ssn from employee_username where username=%s',userName)
+        columns = [col[0] for col in cursor.description]
+        user=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        ssn=user[0]['ssn']
+    if request.method == 'POST':
+        data = querydict_to_dict(request.POST)
+        query='UPDATE ATC SET medexamdate= "{}" where ssn = {}'.format(data['EXAMDATE'],ssn)
+        with connection.cursor() as cursor:
+           cursor.execute(query)
+        url = '/Airport/ATC-MEDICAL'
+        resp_body = '<script>alert("The record was updated");\
+             window.location="%s"</script>' % url
+        return HttpResponse(resp_body) 
+    with connection.cursor() as cursor:
+        query='select medexamdate from atc where ssn = {}'.format(ssn)
+        cursor.execute(query)
+        columns = [col[0] for col in cursor.description]
+        date=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+    return render(request,'mainApp/ATC-medical.html',{'date': date[0]['medexamdate']})
+def atcMonitor(request):
+    userName='shubhu'
+    ssn=0
+    with connection.cursor() as cursor:
+        cursor.execute('select ssn from employee_username where username=%s',userName)
+        columns = [col[0] for col in cursor.description]
+        user=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        ssn=user[0]['ssn']
+    if request.method == 'POST':
+        data = querydict_to_dict(request.POST)
+        query='insert into monitor values({},{})'.format(ssn,data['PLANE'])
+        with connection.cursor() as cursor:
+           cursor.execute(query)
+        url = '/Airport/ATC-MONITOR'
+        resp_body = '<script>alert("The record was added");\
+             window.location="%s"</script>' % url
+        return HttpResponse(resp_body) 
+    query='select regnum from airplane where regnum not in ( select regnum from monitor)'
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        columns = [col[0] for col in cursor.description]
+        results=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ] 
+        print(results)
+    return render(request,'mainApp/ATC-monitor.html',{'results': results} )
+
+def atcCurrent(request):
+    userName='shubhu'
+    ssn=0
+    with connection.cursor() as cursor:
+        cursor.execute('select ssn from employee_username where username=%s',userName)
+        columns = [col[0] for col in cursor.description]
+        user=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        ssn=user[0]['ssn']
+    query='select regnum from monitor where ssn = {}'.format(ssn)
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        columns = [col[0] for col in cursor.description]
+        results=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ] 
+        print(results)
+    return render(request,'mainApp/atc-cmp.html',{'results': results})
+
+def atcDelete(request, regnum):
+    query='delete from monitor where regnum = {}'.format(regnum)
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+    url = '/Airport/ATC-CURRENT'
+    resp_body = '<script>alert("The regnum was Deleted");\
+        window.location="%s"</script>' % url
+    return HttpResponse(resp_body) 
+
+def atcStatus(request):
+    query='select ssn, count(*) as num from monitor group by ssn'
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        columns = [col[0] for col in cursor.description]
+        results=[
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+            ] 
+    return render(request,'mainApp/atc-view.html',{'results': results}) 
+def updateProfile(request):
+    userName='shubhu'
+    ssn=0
+    with connection.cursor() as cursor:
+        cursor.execute('select ssn from employee_username where username=%s',userName)
+        columns = [col[0] for col in cursor.description]
+        user=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ]
+        ssn=user[0]['ssn']
+    if request.method == "POST":
+        data = querydict_to_dict(request.POST)
+        print(data)
+        with connection.cursor() as cursor:
+            sqlQuery='UPDATE employee set name= "{}", phone = {}, sex = "{}", salary = {}, street = "{}", city = "{}", country="{}" where ssn={}'
+            sqlQuery=sqlQuery.format(data['NAME'], data['PHONENUMBER'], data['SEX'], data['SALARY'], data['STREET'], data['CITY'],data['COUNTRY'], data['SSN'])
+            print(sqlQuery)
+            cursor.execute(sqlQuery)
+        url = '/Airport/UpdateProfile'
+        resp_body = '<script>alert("The record was updated");\
+             window.location="%s"</script>' % url
+        return HttpResponse(resp_body)
+    query='select * from employee where ssn = {}'.format(ssn)
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        columns = [col[0] for col in cursor.description]
+        results=[
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+        ] 
+        print(results)
+    return render(request,'mainApp/updateProfile.html',{'results': results} ) 

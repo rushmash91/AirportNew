@@ -3,7 +3,7 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style.css' %}">
 </head>
 
 <body>
@@ -18,28 +18,27 @@
 
   <div class="container">
     <img src="{% static 'mainApp/images/Airport.jpg' %}" width=100% height="300" alt="Snow">
-    <h1 class="centered">ADD THE PLANES YOU ARE MONITORING</h1>
+    <h1 class="centered">VIEW CURRENT STATUS </h1>
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
-
-  <form class="container" method="POST"> {% csrf_token %}
-
-    <div>
-      
-      <label> PLANES </label>
-      <select name="PLANE" id="PLANE">
+  <div>
+    <table>
+        <tr>
+            <th>EMP</th>
+            <th>COUNT</th>
+        </tr>
         {% for result in results %}
-        <option value="{{ result.regnum }}">{{ result.regnum }}</option>
-        {% endfor %}
-      </select>
-    </div>
-   
-    <div>
-      <button>Submit Model</button>
-    </div>
-  </form>
+          <tr>
+          <td>{{ result.ssn }}</td>
+          <td>{{ result.num }}</a></td>
+          </tr>
+          {% endfor %}
+        </table>
+  </div>
+  
 
 
+</body>
 </body>
 
 </html>

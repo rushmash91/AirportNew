@@ -3,13 +3,13 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="{% static 'mainApp/styles/Style.css' %}">
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
 </head>
 
 <body>
 
   <div class="topnav">
-    <a class="active" href="admin-home.html">Home</a>
+    <a class="active" href="/Airport/ATC">Home</a>
     <div class="topnav-right">
       <a href="#Profile">Profile</a>
       <a href="#Logout">Logout</a>
@@ -21,11 +21,14 @@
     <h1 class="centered">UPDATE MEDICAL INFORMATION</h1>
     <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
   </div>
-<form class="container" onSubmit = "write2" action="write.html" method="POST">
+    <h3 style="text-align: center;"> EXAM DATE FORMAT YYYY-MM-DD </h3>
+    <h3 style="text-align: center;"> LAST EXAM DATE {{ date }}</h3>
+<form class="container" method="POST"> {% csrf_token %}
 
     <div>
-      <label>MODEL NUMBER</label>
-      <input type="text" name="EXAMDATE" id="medexamdate" placeholder="Enter Most Recent Medical Exam Date">
+      
+      <label>EXAM DATE </label>
+      <input type="text" name="EXAMDATE" id="medexamdate" placeholder="Enter Most Recent Medical Exam Date(YYYY-MM-DD)">
     </div>
    
     <div>
