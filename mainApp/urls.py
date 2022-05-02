@@ -24,4 +24,13 @@ urlpatterns = [
     path('Airport/login', views.loginPage),
     path('Airport/bestscore/', views.bestscore),
     path('Airport/testdelay/', views.testdelay),
+    path('Airport/ATC', views.atcHome),
+    path('Airport/ATC-MEDICAL', views.atcMedical),
+    path('Airport/ATC-MONITOR', views.atcMonitor),
+    path('Airport/ATC-CURRENT', views.atcCurrent),
+    path('Airport/atc-delete/<int:regnum>', views.atcDelete),
+    path('Airport/ATC-Status', views.atcStatus),
+    path('Airport/UpdateProfile', views.updateProfile),
+
+    
 ]

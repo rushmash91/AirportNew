@@ -1,0 +1,70 @@
+{% load static %}
+<!Doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="{% static 'mainApp/styles/Style2.css' %}">
+</head>
+
+<body>
+
+  <div class="topnav">
+    <a class="active" href="/Airport/ATC">Home</a>
+    <div class="topnav-right">
+      <a href="#Profile">Profile</a>
+      <a href="#Logout">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <img src="{% static 'mainApp/images/Airport.jpg' %}" width=100% height="300" alt="Snow">
+    <h1 class="centered"> UPDATE PROFILE </h1>
+    <div class="top-left">AIRPORT MANAGEMENT SYSTEM</div>
+  </div>
+  
+  <form class="container" onSubmit = "write"  method="POST">{% csrf_token %}
+    {% for result in results %}
+    <div>
+      <label>NAME</label>
+      <input type="text" name="NAME" id="name" placeholder="Enter Employee Name" value="{{ result.name }}" readonly>
+    </div>
+    <div>
+      <label>SSN</label>
+      <input type="text" name="SSN" id="ssn" placeholder="Enter SSN" value="{{ result.ssn }}" readonly>
+    </div>
+    <div>
+      <label>SEX</label>
+      <input type="text" name="SEX" id="sex" placeholder="Enter Sex" value="{{ result.sex }}">
+    </div>
+    <div>
+      <label>PHONE NUMBER</label>
+      <input type="text" name="PHONENUMBER" id="phonenumber" placeholder="Enter Phone Number" value="{{ result.phone }}">
+    </div>
+    <div>
+      <label>SALARY</label>
+      <input type="text" name="SALARY" id="salary" placeholder="Enter Salary" value="{{ result.salary }}" readonly>
+    </div>
+    <div>
+      <label>STREET</label>
+      <input type="text" name="STREET" id="street" placeholder="Enter Street" value="{{ result.street }}">
+    </div>
+    <div>
+      <label>CITY</label>
+      <input type="text" name="CITY" id="city" placeholder="Enter City" value="{{ result.city }}">
+    </div>
+    <div>
+      <label>COUNTRY</label>
+      <input type="text" name="COUNTRY" id="country" placeholder="Enter Country" value="{{ result.country }}">
+    </div>
+    {% endfor %}
+    <div>
+      <button>Submit</button>
+    </div>
+  </form>
+  
+
+
+</body>
+</body>
+
+</html>
