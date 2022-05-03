@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import datetime
 
+
 def querydict_to_dict(query_dict):
     data = {}
     for key in query_dict.keys():
@@ -88,7 +89,7 @@ def index(request):
             dict(zip(columns, row))
             for row in cursor.fetchall()
             ]
-            result = results[0]['COUNT(*)']
+            result = results[0]['count(*)']
         return render(request, 'mainApp/admin-home.html', {'result': result})
     else:
         url = '/Airport/login'
@@ -115,10 +116,10 @@ def AddEmployee(request):
             emp_user='insert into employee_username values({},"{}")'
             emp_user=emp_user.format(data['SSN'],data['USERNAME'])
             if data['EMPLOYEETYPE']=='Technician':
-                emp_Type='INSERT into Technician(ssn) values ({})'
+                emp_Type='INSERT into Technician values ({}, "ACTIVE")'
                 emp_Type=emp_Type.format(data['SSN'])
             else:
-                emp_Type='INSERT into Atc (ssn,medexamdate) values ({},NULL)'
+                emp_Type='INSERT into Atc  values ({},NULL,"ACTIVE")'
                 emp_Type=emp_Type.format(data['SSN'])
             credential='INSERT into employee_credentials values("{}","{}")'
             credential=credential.format(data['USERNAME'],data['PASSWORD'])
@@ -1049,7 +1050,7 @@ def techAddTR(request):
             data = querydict_to_dict(request.POST)
             print(data)
             with connection.cursor() as cursor:
-                cursor.execute('INSERT INTO test_records VALUES ( now (), %s, %s, %s, %s, %s)', (data["SSN"], data["REGNUM"], data["FFANUM"], data["SCORE"], data["HOUR"]))
+                cursor.execute('INSERT INTO test_records VALUES ( now(), %s, %s, %s, %s, %s)', (data["SSN"], data["REGNUM"], data["FFANUM"], data["SCORE"], data["HOUR"]))
                 row = cursor.fetchall()
                 print(row)
             url = '/Airport/techhome'
